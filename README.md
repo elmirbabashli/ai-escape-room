@@ -35,11 +35,17 @@ Because V1 delegates game state authority entirely to the language model, an att
 
 **Outcome:** The model fails to maintain strict physical progression boundaries, acknowledges the bypass, and declares the exit door unlocked without requiring genuine discovery.
 
+![Version 1 Exploit](screenshots/v1_exploit.png)
+
+---
+
 ### Version 2: Defense via Deterministic Validation
 In V2, player inputs are first evaluated by an independent Python engine (`process_action`):
 - Sequential prerequisites are strictly checked (drawer must be unlocked before key extraction; key must be held before door unlocking).
 - The LLM only receives a verified `engine_verdict` and is restricted to descriptive narration.
 - If an unauthorized bypass or injection is detected, the engine emits `DENIED` or `NO_EFFECT`, preventing state modification.
+
+![Version 2 Defense](screenshots/v2_defense.png)
 
 ---
 
@@ -47,6 +53,9 @@ In V2, player inputs are first evaluated by an independent Python engine (`proce
 
 ```text
 ai-escape-room/
+├── screenshots/
+│   ├── v1_exploit.png
+│   └── v2_defense.png
 ├── v1_app.py           # Vulnerable implementation (Pure LLM)
 ├── v2_app.py           # Secure implementation (State Engine + LLM)
 ├── requirements.txt    # Project dependencies
